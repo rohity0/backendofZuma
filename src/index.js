@@ -5,7 +5,7 @@ const register = require("./Routes/register");
 const login = require("./Routes/Login");
 const Todo = require("./Routes/Todo");
 const app = express();
-const PORT = process.env.Port || 8000;
+const PORT = process.env.PORT || 8000
 
 app.use(cors());
 app.use(express.json());
