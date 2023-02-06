@@ -8,12 +8,15 @@ login.post("/", async (req, res)=>{
             try{
                  
                  let loger = await Users.findOne({email: email});
-                  let flag = brcypt.compare(loger.password, password)
-                    if(flag){
-                               let token = `${loger._id}:${loger.email}:${loger.name}`
-                             return  res.status(200).send({
-                                token: token
-                               })
+                 
+                    if(loger){
+                      let flag = await brcypt.compare(password,loger.password);
+                             if(flag){
+                              let token = `${loger._id}:${loger.email}:${loger.name}`
+                              return  res.status(200).send({
+                                 token: token
+                                })
+                             }
 
                     }
 

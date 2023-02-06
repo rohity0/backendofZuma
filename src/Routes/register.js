@@ -13,18 +13,16 @@ register.post("/", async (req, res)=>{
             try{
                 let  validUser = await Users.find({email: email});
                 if(validUser.length===0){
-                     let hashPassword = brcypt.hash(password, 10)
-                        
-                      let newUser = new Users({
-                        ...req.body,
-                        password: hashPassword,
-                      });
+                     let hashPassword = await brcypt.hash(password, 10)
+                         req.body.password = hashPassword;
+                      let newUser = new Users(req.body);
                         await newUser.save();
                         res.status(200).send({ keyS : "User Signuped Sccessfully"})
                 }else{
                     res.status(200).send("User already  have an account");
                 }
             }catch(e){
+                console.log(e.message);
                          res.send(e.message);
             }
 })
