@@ -1,4 +1,5 @@
 const express = require("express");
+require('dotenv').config();
 const cors = require("cors");
 const dbConnect = require("../config/dbConnect");
 const register = require("./Routes/register");
@@ -13,11 +14,11 @@ app.use(express.json());
 // register api
 app.use("/register", register);
 app.use("/login", login);
-app.use("/todo", Todo)
+app.use("/todo", Todo);
 
-app.get("/", (req, res)=>[
+app.get("/", (req, res)=>{
       res.send("welcome")
-])
+})
 
 
 app.listen(PORT , async ()=>{

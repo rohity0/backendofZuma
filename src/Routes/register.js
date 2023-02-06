@@ -1,6 +1,6 @@
 const express = require("express");
 const Users = require("../Schema/user");
-
+const  brcypt = require("bcrypt");
 const register = express.Router();
 
 register.get("/", (req, res)=>[
@@ -9,11 +9,16 @@ register.get("/", (req, res)=>[
 
 
 register.post("/", async (req, res)=>{
-          let {email} = req.body;
+          let {email, password} = req.body;
             try{
                 let  validUser = await Users.find({email: email});
                 if(validUser.length===0){
-                      let newUser = new Users(req.body);
+                     let hashPassword = brcypt.hash(password, 10)
+                        
+                      let newUser = new Users({
+                        ...req.body,
+                        password: hashPassword,
+                      });
                         await newUser.save();
                         res.status(200).send({ keyS : "User Signuped Sccessfully"})
                 }else{
